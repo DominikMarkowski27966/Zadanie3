@@ -1,29 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApplication2
 {
-    public class KontenerL : Kontener
+    public class KontenerL : Kontener, IHazardNotifier
     {
-        private bool niebezpiecnzy;
-        private static HashSet<int> numery = new HashSet<int>();
-        public KontenerL(double masaLadunku, double wysokosc, double wagaWlasna, double glebokosc, string numer, double maxLadownosc, bool niebezpieczny)
-            : base(masaLadunku, wysokosc, wagaWlasna, glebokosc, numer, maxLadownosc)
+        private bool niebezpieczny;
+
+        public KontenerL(
+            double wysokosc,
+            double wagaWlasna,
+            double glebokosc,
+            double maxLadownosc,
+            bool niebezpieczny)
+            : base(wysokosc, wagaWlasna, glebokosc, maxLadownosc)
         {
-            this.niebezpiecnzy = niebezpieczny;
-            if (niebezpiecnzy)
+            this.niebezpieczny = niebezpieczny;
+            this.MaxLadownosc = Niebiezpieczny ? MaxLadownosc * 0.5 : MaxLadownosc * 0.9;
+            Nazwa = Nazwa + "-L-" + Id;
+        }
+
+        public override void Zaladowanie(double masa)
+        {
+            try
             {
-                MaxLadownosc *= 0.5;
+                base.Zaladowanie(masa);
             }
-            else
+            catch (OverfillException)
             {
-                MaxLadownosc *= 0.9;
+                Info(Nazwa);
             }
         }
 
-        public void Zaladowanie()
+        public override string ToString()
         {
-            
+            string czy = niebezpieczny ? "niebezpieczny" : "bezpieczny";
+            return base.ToString() + $"\nLadunek jest: {czy}\n";
         }
-        
+
+        public void Info(string idKontenera)
+        {
+            Console.WriteLine("Wystapil niebezpieczny incydent w kontenerze: " + idKontenera);
+        }
+
+        public bool Niebiezpieczny
+        {
+            get => niebezpieczny;
+            set => niebezpieczny = value;
+        }
     }
 }

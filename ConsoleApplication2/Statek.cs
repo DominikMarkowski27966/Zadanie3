@@ -6,12 +6,15 @@ namespace ConsoleApplication2
     {
         private string nazwa;
         private List<Kontener> kontynery;
+        private double maxUdzwig;
+        private double speedInKnots;
 
-        public Statek(string nazwa, List<Kontener> kontynery)
+        public Statek(string nazwa, List<Kontener> kontynery, double maxUdzwig,double speedInKnots)
         {
             this.nazwa = nazwa;
             this.kontynery = kontynery;
-            
+            this.maxUdzwig = maxUdzwig;
+            this.speedInKnots = speedInKnots;
         }
     }
 }
