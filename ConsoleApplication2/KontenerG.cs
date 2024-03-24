@@ -39,7 +39,7 @@ namespace ConsoleApplication2
         public override string ToString()
         {
             return base.ToString() +
-                   $"Atmosfery: {Atmosfera}";
+                   $"\nAtmosfery: {Atmosfera}";
         }
 
         public int Atmosfera

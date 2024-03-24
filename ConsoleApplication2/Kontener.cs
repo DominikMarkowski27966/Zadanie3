@@ -15,7 +15,8 @@ namespace ConsoleApplication2
         private string nazwa;
         private double maxLadownosc;
 
-        private static HashSet<int> numery = new HashSet<int>();
+        private static HashSet<int> ids = new HashSet<int>();
+        private static Dictionary<int, Kontener> dictOfCon = new Dictionary<int, Kontener>();
 
         protected Kontener(
             double wysokosc,
@@ -27,14 +28,15 @@ namespace ConsoleApplication2
             this.wysokosc = wysokosc;
             this.wagaWlasna = wagaWlasna;
             this.glebokosc = glebokosc;
-            this.id = GenerujNumer(numery);
+            this.id = GenerujNumer(ids);
             this.nazwa = "KON";
             this.maxLadownosc = maxLadownosc;
+            dictOfCon.Add(Id, this);
         }
 
         public virtual void Oproznienie()
         {
-            masaLadunku = 0;
+            MasaLadunku = 0;
         }
 
         public virtual void Zaladowanie(double nowaMasa)
@@ -67,7 +69,7 @@ namespace ConsoleApplication2
 
             return 0;
         }
-        
+
         public override string ToString()
         {
             return $"Kontener: {Nazwa}\nLadunek: {MasaLadunku} kg" +
@@ -75,6 +77,20 @@ namespace ConsoleApplication2
                    $"\nWaga {WagaWlasna} kg " +
                    $"\nGlebokosc: {Glebokosc} m " +
                    $"\nMax ladownosc: {MaxLadownosc} ";
+        }
+
+        public Kontener GetById(int kontenerId)
+        {
+            if (dictOfCon.TryGetValue(kontenerId, out Kontener kontener))
+            {
+                return kontener;
+            }
+            else
+            {
+                Console.WriteLine($"Brak kontenera o id: {kontenerId}");
+            }
+
+            return null;
         }
 
 
@@ -118,6 +134,12 @@ namespace ConsoleApplication2
         {
             get => nazwa;
             set => nazwa = value;
+        }
+
+        public static Dictionary<int, Kontener> DictOfCon
+        {
+            get => dictOfCon;
+            set => dictOfCon = value;
         }
     }
 }

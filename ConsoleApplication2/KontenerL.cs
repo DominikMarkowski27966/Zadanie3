@@ -35,7 +35,7 @@ namespace ConsoleApplication2
         public override string ToString()
         {
             string czy = niebezpieczny ? "niebezpieczny" : "bezpieczny";
-            return base.ToString() + $"\nLadunek jest: {czy}\n";
+            return base.ToString() + $"\nLadunek jest: {czy}";
         }
 
         public void Info(string idKontenera)
