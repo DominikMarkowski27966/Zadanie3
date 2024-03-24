@@ -36,6 +36,7 @@ namespace ConsoleApplication2
             WriteLine("-----------------");
             statek1.PokazLadunek();
             statek1.InfoOLadunku();
+            statek1.InfoOLadunku();
 
             //CLI cli = new CLI();
         }
